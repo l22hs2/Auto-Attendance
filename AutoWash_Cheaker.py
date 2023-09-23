@@ -24,7 +24,7 @@ options.add_argument('window-size=1920x1080')
 options.add_argument('--no-sandbox')
 
 # Chromium 실행 (패키지: chromium-chromedriver)
-driver = webdriver.Chrome(service=Service('/usr/lib/chromium-browser/chromedriver'), options=options)
+driver = webdriver.Chrome(options=options)
 
 # 로그인
 driver.get("https://autowash.co.kr/member/login.php")
