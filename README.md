@@ -15,11 +15,11 @@
 
 ## 📌 동작 결과
 ✔ 매일 출석체크 결과와 함께 보유 마일리지 정보를 텔레그렘 메시지로 전송
-  
-  <img src="https://github.com/l22hs2/Web-Auto-Attendance/assets/90748701/98253c7f-5ed3-4e17-9cfb-3dcd308a4a1e" width="30%" height="30%">
+
+<img src="https://github.com/l22hs2/Web-Auto-Attendance/assets/90748701/98253c7f-5ed3-4e17-9cfb-3dcd308a4a1e" width="40%" height="40%">
 
 &nbsp;
 
 ✔ 현재까지 본 시스템을 통해 적립하여 사용한 마일리지 내역
-  
-  ![image](https://github.com/l22hs2/Web-Auto-Attendance/assets/90748701/b9ff6f8b-18f7-4c06-9a6e-523a035b70bf)
+
+![image](https://github.com/l22hs2/Web-Auto-Attendance/assets/90748701/b9ff6f8b-18f7-4c06-9a6e-523a035b70bf)
