@@ -82,7 +82,7 @@ try:
                     if running:
                         # 보안문자
                         img = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="capcha "]/img'))) # Captcha 이미지
-                        img.screenshot('cap.png')  # 이미지 저장
+                        img.screenshot("/home/ubuntu/service/Web-Auto-Attendance/cap.png")  # 이미지 저장
                         time.sleep(1)
 
                         # Captcha 해독
@@ -124,9 +124,12 @@ try:
                             raise
                         
                     # 보유 마일리지 조회
-                    driver.find_element(By.XPATH, '//div[@class="menu_user"]').click() # 마이페이지 이동
+                    driver.execute_script('window.open("https://autowash.co.kr/myshop/mileage/historyList.html");') # 새 탭 생성
+                    time.sleep(1)
+                    driver.switch_to.window(driver.window_handles[-1]) # 탭 전환
+
                     driver.implicitly_wait(5)
-                    self.point = driver.find_element(By.XPATH, '//span[@id="xans_myshop_bankbook_total_mileage"]').text # 보유 마일리지
+                    self.point = driver.find_element(By.XPATH, '//span[@id="xans_myshop_summary_avail_mileage"]').text # 보유 마일리지
                     print(f"보유 마일리지: {self.point}")
 
                     break
