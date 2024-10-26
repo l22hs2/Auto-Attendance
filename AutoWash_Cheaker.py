@@ -11,6 +11,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
 
 def nowTime():
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -38,6 +40,7 @@ class Telegram:
         url = f"https://api.telegram.org/bot{token}/sendMessage?"
         requests.post(url, json=data)
 
+print("세팅 완료")
 
 try:
     # 출석체크 크롤러
@@ -50,16 +53,22 @@ try:
             self.point = ""
 
         def run(self):
+            print("run")
             # Chromium 실행 (패키지: chromium-chromedriver)
             driver = webdriver.Chrome(options=options)
+            driver.maximize_window()
+            print("드라이버 실행")
 
             # 로그인
             driver.get(r"https://autowash.co.kr/member/login.html?noMemberOrder&returnUrl=%2Fmyshop%2Findex.html")
+            print("로그인 페이지 접속")
             driver.implicitly_wait(5)
             driver.find_element(By.ID, 'member_id').send_keys(self.id)                  # ID입력
             driver.find_element(By.ID, 'member_passwd').send_keys(self.pw)              # PW입력
             driver.find_element(By.XPATH, '//div[@class="login__button"]/a').click()    # 로그인 버튼 클릭
-        
+            print("로그인 버튼 클릭")
+            
+            
             WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="bottom-nav__go"]'))) # 메인 페이지로 복귀했는지 (배너)체크 (=로그인 성공)
             driver.find_element(By.XPATH, '//div[@class="bottom-nav__go"]/a[2]').click() # 출석 체크 배너 클릭
 
@@ -71,11 +80,13 @@ try:
                 try:
                     # 출석 체크 버튼 클릭 시도
                     try:
+                        print("대기 시작")
                         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//p[@class="ec-base-button gFull"]/a'))).click()
                         running = True
                     # 이미 출석 체크한 경우
                     except TimeoutException:
-                        self.alertText = driver.find_element(By.XPATH, '//div[@id="contents"]/div/div[3]/div[3]/p').text
+                        # self.alertText = driver.find_element(By.XPATH, '//div[@id="contents"]/div/div[3]/div[3]/p').text
+                        alertText = "출첵 버튼을 찾지 못함"
                         print(self.alertText)
                     
                     # 출석 체크 수행
@@ -142,7 +153,7 @@ try:
                     driver.refresh()    # Captcha 문자 새로고침을 위한 브라우저 새로고침
 
                 # 3회 이상 실패시 출석체크 중단
-                if fail_cnt >= 3:
+                if fail_cnt >= 2:
                     break
 
 
