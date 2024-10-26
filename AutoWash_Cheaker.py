@@ -12,7 +12,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.action_chains import ActionChains
 
 def nowTime():
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -57,16 +56,13 @@ try:
             # Chromium 실행 (패키지: chromium-chromedriver)
             driver = webdriver.Chrome(options=options)
             driver.maximize_window()
-            print("드라이버 실행")
 
             # 로그인
             driver.get(r"https://autowash.co.kr/member/login.html?noMemberOrder&returnUrl=%2Fmyshop%2Findex.html")
-            print("로그인 페이지 접속")
             driver.implicitly_wait(5)
             driver.find_element(By.ID, 'member_id').send_keys(self.id)                  # ID입력
             driver.find_element(By.ID, 'member_passwd').send_keys(self.pw)              # PW입력
             driver.find_element(By.XPATH, '//div[@class="login__button"]/a').click()    # 로그인 버튼 클릭
-            print("로그인 버튼 클릭")
             
             
             WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="bottom-nav__go"]'))) # 메인 페이지로 복귀했는지 (배너)체크 (=로그인 성공)
@@ -80,7 +76,6 @@ try:
                 try:
                     # 출석 체크 버튼 클릭 시도
                     try:
-                        print("대기 시작")
                         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, '//p[@class="ec-base-button gFull"]/a'))).click()
                         running = True
                     # 이미 출석 체크한 경우
